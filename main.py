@@ -1,6 +1,6 @@
 import argparse
 from chainer import optimizers
-import squeeze
+import darknet
 import amaz_trainer
 import amaz_cifar10_dl
 import amaz_augumentationCustom
@@ -26,8 +26,8 @@ if __name__ == '__main__':
     lr = args.pop('lr')
     epoch = args.pop('epoch')
 
-    model = squeeze.Squeeze(10)
-    optimizer = amaz_optimizer.OptimizerSqueeze(model,lr=lr,epoch=epoch)
+    model = darknet.DarkNet(10)
+    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=lr,epoch=epoch)
     dataset = amaz_cifar10_dl.Cifar10().loader()
     dataaugumentation = amaz_augumentationCustom.Normalize128
     args['model'] = model

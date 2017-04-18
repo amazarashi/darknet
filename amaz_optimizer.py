@@ -17,10 +17,10 @@ class Optimizers(object):
     def setup(self,model):
         self.optimizer.setup(model)
 
-class OptimizerSqueeze(Optimizers):
+class OptimizerDarknet(Optimizers):
 
     def __init__(self,model=None,lr=0.01,momentum=0.9,epoch=300,schedule=(150,225),weight_decay=1.0e-4):
-        super(OptimizerSqueeze,self).__init__(model,epoch)
+        super(OptimizerDarknet,self).__init__(model,epoch)
         self.lr = lr
         self.optimizer = optimizers.MomentumSGD(self.lr,momentum)
         weight_decay = chainer.optimizer.WeightDecay(weight_decay)
