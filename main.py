@@ -1,10 +1,10 @@
 import argparse
 from chainer import optimizers
-import darknet
-import amaz_trainer
+import darknet19
 import amaz_cifar10_dl
 import amaz_augumentationCustom
 import amaz_optimizer
+import amaz_trainer_batchInbatch
 
 if __name__ == '__main__':
 
@@ -26,13 +26,13 @@ if __name__ == '__main__':
     lr = args.pop('lr')
     epoch = args.pop('epoch')
 
-    model = darknet.DarkNet(10)
-    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=lr,epoch=epoch)
+    model = darknet19.Darknet19(10)
+    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=lr,epoch=epoch,batch=args.pop("batch"))
     dataset = amaz_cifar10_dl.Cifar10().loader()
-    dataaugumentation = amaz_augumentationCustom.Normalize128
+    dataaugumentation = amaz_augumentationCustom.Normalize224
     args['model'] = model
     args['optimizer'] = optimizer
     args['dataset'] = dataset
     args['dataaugumentation'] = dataaugumentation
-    main = amaz_trainer.Trainer(**args)
+    main = amaz_trainer_batchInbatch.Trainer(**args)
     main.run()
