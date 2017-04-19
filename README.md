@@ -1,6 +1,6 @@
 # About
 
-darkent19 by chainer [developing]
+darkent19 by chainer
 (input size 224x224)
 
 - Classification Experiment over Cifar10
