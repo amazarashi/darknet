@@ -32,8 +32,8 @@ class OptimizerDarknet(Optimizers):
         self.data_length = 50000
 
     def update_parameter(self,current_epoch):
-        if current_epoch in self.schedule:
-            new_lr = self.lr * (1 - self.batch/self.data_length) ** self.decay_power
-            self.lr = new_lr
-            self.optimizer.lr = new_lr
-            print("optimizer was changed to {0}..".format(new_lr))
+        # if current_epoch in self.schedule:
+        new_lr = self.lr * (1 - self.batch/self.data_length) ** self.decay_power
+        self.lr = new_lr
+        self.optimizer.lr = new_lr
+        print("optimizer was changed to {0}..".format(new_lr))
