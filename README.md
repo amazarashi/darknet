@@ -5,19 +5,19 @@ darkent19 by chainer
 
 - Classification Experiment over Cifar10
 
-<!-- # Paper
+# Site
 
-[160224 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size](https://arxiv.org/abs/1602.07360)
+[YOLO: Real-Time Object Detection](https://pjreddie.com/darknet/yolo/)
 
 # Model
 
-Macroarchitectural of squeezeNet
+Darknet-19
 
 # How to run
 
-git clone git@github.com:amazarashi/squeeze-chainer.git
+git clone git@github.com:amazarashi/darknet.git
 
-cd ./squeeze-chainer
+cd ./darknet
 
 python main.py -g 1
 
@@ -28,18 +28,6 @@ Cifar10 [(link)](https://www.cs.toronto.edu/~kriz/cifar.html)
 
 ### Result
 
-(1) optimizer: Adam
+![accuracy-adam](https://github.com/amazarashi/darknet/blob/develop/result/momsgd/accuracy.png "accuracy")
 
-![accuracy-adam](https://github.com/amazarashi/squeeze-chainer/blob/develop/result/adam/accuracy.png "accuracy")
-
-![loss-adam](https://github.com/amazarashi/squeeze-chainer/blob/develop/result/adam/loss.png "loss")
-
-(2) optimizer: MomentumSGD
-  - weight decay : 1.0e-4
-  - momentum : 0.9
-  - schedule[default:0.1,150:0.01,225:0.001]
-
-
-![accuracy-adam](https://github.com/amazarashi/squeeze-chainer/blob/develop/result/momsgd/accuracy.png "accuracy")
-
-![loss-adam](https://github.com/amazarashi/squeeze-chainer/blob/develop/result/momsgd/loss.png "loss") -->
+![loss-adam](https://github.com/amazarashi/darknet/blob/develop/result/momsgd/loss.png "loss")
