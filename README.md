@@ -28,6 +28,8 @@ Cifar10 [(link)](https://www.cs.toronto.edu/~kriz/cifar.html)
 
 ### Result
 
-![accuracy-adam](https://github.com/amazarashi/darknet/blob/develop/result/momsgd/accuracy.png "accuracy")
+Max Accuracy:94.8%
 
-![loss-adam](https://github.com/amazarashi/darknet/blob/develop/result/momsgd/loss.png "loss")
+![accuracy-adam](https://github.com/amazarashi/darknet/blob/develop/res/accuracy.png "accuracy")
+
+![loss-adam](https://github.com/amazarashi/darknet/blob/develop/res/loss.png "loss")
