@@ -29,7 +29,7 @@ if __name__ == '__main__':
     model = darknet19.Darknet19(10)
     optimizer = amaz_optimizer.OptimizerDarknet(model,lr=lr,epoch=epoch,batch=args.pop("batch"))
     dataset = amaz_cifar10_dl.Cifar10().loader()
-    dataaugumentation = amaz_augumentationCustom.Normalize448
+    dataaugumentation = amaz_augumentationCustom.Normalize64
     args['model'] = model
     args['optimizer'] = optimizer
     args['dataset'] = dataset
