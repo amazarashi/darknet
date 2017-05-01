@@ -19,7 +19,7 @@ class Optimizers(object):
 
 class OptimizerDarknet(Optimizers):
 
-    def __init__(self,model=None,lr=0.1,momentum=0.9,epoch=160,schedule=(80,145,200s),weight_decay=5.0e-4,decay_power=4,batch=64):
+    def __init__(self,model=None,lr=0.001,momentum=0.9,epoch=160,schedule=(90,145,200),weight_decay=5.0e-4,decay_power=4,batch=64):
         super(OptimizerDarknet,self).__init__(model,epoch)
         self.lr = lr
         self.decay_power = decay_power #polynominal rate decays

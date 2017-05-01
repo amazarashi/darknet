@@ -24,7 +24,7 @@ class Trainer(object):
         self.dataset = dataset
         self.epoch = epoch
         self.batch = batch
-        self.train_x,self.train_y,self.test_x,self.test_y,self.meta = self.init_dataset()
+        self.train_key,self.train_len,self.test_key,self.test_len,self.meta = self.init_dataset()
         self.gpu = gpu
         self.check_gpu_status = self.check_gpu(self.gpu)
         self.xp = self.check_cupy(self.gpu)
@@ -49,22 +49,23 @@ class Trainer(object):
         return False
 
     def init_dataset(self):
-        train_x = self.dataset["train_x"]
-        train_y = self.dataset["train_y"]
-        test_x = self.dataset["test_x"]
-        test_y = self.dataset["test_y"]
-        meta = self.dataset["meta"]
-        return (train_x,train_y,test_x,test_y,meta)
+        d = open("imagenet.pkl","rb")
+        dd = pickle.load(d)
+        d.close()
+        train_len = len(dd["train"])
+        test_len = len(dd["val"])
+        train_key = np.array(sorted(dd["train"].keys()))
+        test_key = np.array(sorted(dd["val"].keys()))
+        meta = np.array(dd["meta"])
+        return (train_key,train_len,test_key,test_len,meta)
 
     def train_one(self,epoch):
         model = self.model
         optimizer = self.optimizer
         batch = self.batch
-        train_x = self.train_x
-        train_y = self.train_y
         meta = self.meta
         sum_loss = 0
-        total_data_length = len(train_x)
+        total_data_length = len(self.train_len)
 
         progress = self.utility.create_progressbar(int(total_data_length/batch),desc='train',stride=1)
         train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
@@ -72,6 +73,9 @@ class Trainer(object):
         batch_in_batch_size = 16
         for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
+            train_x = amaz_pascalvoc_2007.PASCALVOC2007().loadImageDataFromKey(indices,self.train_key,"train")
+            train_y = amaz_pascalvoc_2007.PASCALVOC2007().loadImageAnnotationsFromKey(indices,self.train_key,"imagenet.pkl","train")
+
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[indices[ii:ii + batch_in_batch_size]]
                 t = train_y[indices[ii:ii + batch_in_batch_size]]
@@ -101,13 +105,15 @@ class Trainer(object):
         model = self.model
         optimizer = self.optimizer
         batch = self.batch
-        test_x = self.test_x
-        test_y = self.test_y
         meta = self.meta
 
         sum_loss = 0
         sum_accuracy = 0
         batch_in_batch_size = 16
+
+        test_x = amaz_pascalvoc_2007.PASCALVOC2007().loadImageDataFromKey(np.arange(self.test_len),self.test_key,"val")
+        test_y = amaz_pascalvoc_2007.PASCALVOC2007().loadImageAnnotationsFromKey(np.arange(self.test_len),self.test_key,"imagenet.pkl","val")
+
         progress = self.utility.create_progressbar(int(len(test_x)),desc='test',stride=batch_in_batch_size)
         for i in progress:
             x = test_x[i:i + batch_in_batch_size]
