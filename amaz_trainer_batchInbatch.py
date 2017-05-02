@@ -128,11 +128,9 @@ class Trainer(object):
                 print("666666")
                 loss.to_cpu()
                 tqdm.write("777777")
-
                 sum_loss += loss.data * batch_in_batch_size
                 tqdm.write("8888888")
-
-                del loss,x,t,y
+                del loss,x,t
             print("before update")
             print("--------------")
             print("-------------")
