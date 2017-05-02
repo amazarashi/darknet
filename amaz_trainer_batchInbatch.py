@@ -82,50 +82,54 @@ class Trainer(object):
         train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
-        for i,indices in zip(progress,train_data_yeilder):
+        for ii,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
 
-            for ii in six.moves.range(0, len(indices), batch_in_batch_size):
-                print("#########")
-                print(ii)
-                print("#########")
-                print("11111")
-                print("11111")
-                print("11111")
-                x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
-                t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
-                print("222222")
-                print("222222")
-                print("222222")
-                DaX = []
-                for img in x:
-                    da_x = self.dataaugumentation.train(img)
-                    DaX.append(da_x)
-                print("333333")
-                print("333333")
-                print("333333")
-                x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
-                t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
-                del DaX
-                print("4444444")
-                print("4444444")
-                print("4444444")
-                y = model(x,train=True)
-                print("555555")
-                print("555555")
-                print("555555")
-                loss = model.calc_loss(y,t) / batch_in_batch_size
-                loss.backward()
-                loss.to_cpu()
-                sum_loss += loss.data * batch_in_batch_size
-                del loss,x,t
+            #for ii in six.moves.range(0, len(indices), batch_in_batch_size):
+            print("#########")
+            print(ii)
+            print("#########")
+            print("11111")
+            print("11111")
+            print("11111")
+            #x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
+            #t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
+            x = train_x
+            t = train_y
+            print("222222")
+            print("222222")
+            print("222222")
+            DaX = []
+            for img in x:
+                da_x = self.dataaugumentation.train(img)
+                DaX.append(da_x)
+            print("333333")
+            print("333333")
+            print("333333")
+            x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
+            t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
+            del DaX
+            print("4444444")
+            print("4444444")
+            print("4444444")
+            y = model(x,train=True)
+            print("555555")
+            print("555555")
+            print("555555")
+            #loss = model.calc_loss(y,t) / batch_in_batch_size
+            loss = model.calc_loss(y,t) / batch
+            loss.backward()
+            loss.to_cpu()
+            # sum_loss += loss.data * batch_in_batch_size
+            sum_loss += loss.data * batch
+            del loss,x,t
             optimizer.update()
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
-        self.logger.train_loss(epoch,sum_loss/len(train_y))
+        self.logger.train_loss(epoch,sum_loss/total_data_length)
         print("######################")
 
     def test_one(self,epoch):
