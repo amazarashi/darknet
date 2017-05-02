@@ -101,12 +101,12 @@ class Trainer(object):
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
 
-                x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
-                t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
+                x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
+                t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
                 y = model(x,train=True)
                 loss = model.calc_loss(y,t) / batch
                 loss.backward()
-                
+
                 loss.to_cpu()
                 sum_loss += loss.data * batch
                 del loss,x,t
