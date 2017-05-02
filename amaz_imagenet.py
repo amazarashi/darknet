@@ -132,11 +132,11 @@ class ImageNet(object):
             print("#####")
             print("#####")
             img = Image.open(imgpath)
-            print(np.asarray(Image.open(imgpath)).shape)
-            print("#####")
-            print("#####")
-            print("#####")
-            print("#####")
+            origshapetype = len(np.asarray(img).shape)
+            if origshapetype == 2:
+                print("its gray")
+                print("#####")
+                print("#####")
             transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             print(transfromedImg.shape)
             print("#####")
