@@ -127,8 +127,14 @@ class ImageNet(object):
 
         imgdatas = []
         for key in targetKeys:
-            imgpath = self.dataPath + "train/" + key + ".JPEG"
+            imgpath = self.dataPath + train_or_test+ "/" + key + ".JPEG"
+            print(imgpath)
+            print("#####")
+            print("#####")
             img = Image.open(imgpath)
+            print(img.shape)
+            print("#####")
+            print("#####")
             img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             img = amaz_augumentation.Augumentation().Z_score(img)
             imgdatas.append(img)
@@ -146,7 +152,7 @@ class ImageNet(object):
 
         t = []
         for key in targetKeys:
-            annotationpath = self.annotationsPath + "train/" + key + ".xml"
+            annotationpath = self.annotationsPath + train_or_test + "/" + key + ".xml"
             label = self.loadXML(annotationpath)
             label_ind = self.ctg_ind(label)
             t.append(label_ind)
