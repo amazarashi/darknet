@@ -40,7 +40,7 @@ class ImageNet(object):
          * load data
         """
         #get all categories meta
-        alllist = os.listdir(self.dataPath)
+        alllist = os.listdir(self.dataPath + "train/")
         metalist = [item for item in alllist if os.path.isdir(self.dataPath+item)]
         self.meta = metalist
         category_num = len(metalist)
