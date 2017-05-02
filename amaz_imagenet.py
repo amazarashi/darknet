@@ -63,34 +63,34 @@ class ImageNet(object):
         valImgs = valImgs.readlines()
         valImgs = [info.split()[0] for info in valImgs]
 
-        print("loading traindata ,,,,,,,")
-        trainData = {}
-        count_trian = 0
-        for trainimg in trainImgs:
-            imgpath = self.dataPath + "train/" + trainimg + ".JPEG"
-            annotationpath = self.annotationsPath + "train/" + trainimg + ".xml"
-            label = self.loadXML(annotationpath)
-            print(count_trian)
-            print("imgpath:",imgpath)
-            print("label:",label)
-            trainData[trainimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
-            count_trian += 1
-        print("train length:",count_trian)
-
-        print("loading valdata ,,,,,,,")
-        valData = {}
-        count_val = 0
-        for valimg in valImgs:
-            imgpath = self.dataPath + "val/" + valimg + ".JPEG"
-            annotationpath = self.annotationsPath + "val/" + valimg + ".xml"
-            label = self.loadXML(annotationpath)
-            trainData[valimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
-            count_val += 1
-        print("train length:",count_trian)
+        # print("loading traindata ,,,,,,,")
+        # trainData = {}
+        # count_trian = 0
+        # for trainimg in trainImgs:
+        #     imgpath = self.dataPath + "train/" + trainimg + ".JPEG"
+        #     annotationpath = self.annotationsPath + "train/" + trainimg + ".xml"
+        #     label = self.loadXML(annotationpath)
+        #     print(count_trian)
+        #     print("imgpath:",imgpath)
+        #     print("label:",label)
+        #     trainData[trainimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
+        #     count_trian += 1
+        # print("train length:",count_trian)
+        #
+        # print("loading valdata ,,,,,,,")
+        # valData = {}
+        # count_val = 0
+        # for valimg in valImgs:
+        #     imgpath = self.dataPath + "val/" + valimg + ".JPEG"
+        #     annotationpath = self.annotationsPath + "val/" + valimg + ".xml"
+        #     label = self.loadXML(annotationpath)
+        #     trainData[valimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
+        #     count_val += 1
+        # print("train length:",count_trian)
 
         res = {}
-        res["train"] = trainData
-        res["val"] = valData
+        res["train_key"] = trainImgs
+        res["val_key"] = valImgs
         res["meta"] = metalist
 
         #save on pkl file
@@ -124,7 +124,8 @@ class ImageNet(object):
 
         imgdatas = []
         for key in targetKeys:
-            img = Image.open( self.dataPath + train_or_test + key + ".JPEG")
+            imgpath = self.dataPath + "train/" + key + ".JPEG"
+            img = Image.open(imgpath)
             img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             img = amaz_augumentation.Augumentation().Z_score(img)
             imgdatas.append(img)
@@ -142,7 +143,8 @@ class ImageNet(object):
 
         t = []
         for key in targetKeys:
-            anno = dd[train_or_test][key]
-            ind = int(anno["label_index"])
-            t.append(ind)
+            annotationpath = self.annotationsPath + "train/" + key + ".xml"
+            label = self.loadXML(annotationpath)
+            label_ind = self.ctg_ind(label)
+            t.append(label_ind)
         return t
