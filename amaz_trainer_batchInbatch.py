@@ -18,6 +18,8 @@ import amaz_imagenet
 
 sampling = amaz_sampling.Sampling()
 
+xp = cuda.cupy
+
 class Trainer(object):
 
     def __init__(self,model=None,batchinbatch=16,loadmodel=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
@@ -109,8 +111,8 @@ class Trainer(object):
             print("333333")
             print("333333")
             print("333333")
-            x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
-            t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
+            x = self.datashaping.prepareinput(DaX,dtype=xp.float32,volatile=False)
+            t = self.datashaping.prepareinput(t,dtype=xp.int32,volatile=False)
             del DaX
             print("4444444")
             print("4444444")
