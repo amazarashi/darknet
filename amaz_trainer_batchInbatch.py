@@ -15,6 +15,7 @@ import amaz_datashaping
 import amaz_log
 import amaz_augumentationCustom
 import amaz_imagenet
+import sys
 
 sampling = amaz_sampling.Sampling()
 
@@ -74,6 +75,15 @@ class Trainer(object):
         meta = np.array(dd["meta"])
         return (train_key,train_len,test_key,test_len,meta)
 
+    def get_gpu_info(nvidia_smi_path='nvidia-smi', keys=DEFAULT_ATTRIBUTES, no_units=True):
+    nu_opt = '' if not no_units else ',nounits'
+    cmd = '%s --query-gpu=%s --format=csv,noheader%s' % (nvidia_smi_path, ','.join(keys), nu_opt)
+    output = subprocess.check_output(cmd, shell=True)
+    lines = output.split('\n')
+    lines = [ line.strip() for line in lines if line.strip() != '' ]
+
+    return [ { k: v for k, v in zip(keys, line.split(', ')) } for line in lines ]
+
     def train_one(self,epoch):
         model = self.model
         optimizer = self.optimizer
@@ -110,10 +120,20 @@ class Trainer(object):
             # print("333333")
             # print("333333")
             tqdm.write("koko1")
+            tqdm.write("koko1")
+            tqdm.write("koko1")
+            tqdm.write(sys.getsizeof(DaX))
             x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
             tqdm.write("koko2")
+            tqdm.write("koko2")
+            tqdm.write("koko2")
+            tqdm.write(sys.getsizeof(x))
+
             t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
             tqdm.write("koko3")
+            tqdm.write("koko3")
+            tqdm.write("koko3")
+            tqdm.write(sys.getsizeof(t))
             # print("4444444")
             # print("4444444")
             # print("4444444")
