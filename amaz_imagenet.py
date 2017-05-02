@@ -10,6 +10,7 @@ import amaz_augumentation
 from os import system
 from PIL import Image
 from bs4 import BeautifulSoup as Soup
+import cv2
 
 class ImageNet(object):
 
@@ -134,9 +135,11 @@ class ImageNet(object):
             img = Image.open(imgpath)
             origshapetype = len(np.asarray(img).shape)
             if origshapetype == 2:
+                img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
                 print("its gray")
                 print("#####")
                 print("#####")
+                print(img.shape)
             transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             print(transfromedImg.shape)
             print("#####")
