@@ -79,6 +79,17 @@ class Trainer(object):
         print("testLength:",test_len)
         return (train_key,train_len,test_key,test_len,meta)
 
+    def imagenet_Inspection(self):
+        for i in range(0,self.train_len,32):
+            target = range(i,32)
+            train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(target,self.train_key,"train")
+            x = train_x[ii:ii + batch_in_batch_size]
+            DaX = [self.dataaugumentation.train(img) for img in x]
+            print("before datashaping")
+            x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
+            print("after datashaping")
+        return
+
     def train_one(self,epoch):
         model = self.model
         optimizer = self.optimizer
@@ -88,7 +99,7 @@ class Trainer(object):
         total_data_length = self.train_len
 
         progress = self.utility.create_progressbar(int(total_data_length/batch),desc='train',stride=1)
-        train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
+        train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length,)
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
