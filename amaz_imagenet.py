@@ -134,7 +134,7 @@ class ImageNet(object):
             transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
             imgdatas.append(resimg)
-        return imgdatas
+        return np.array(imgdatas)
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
         d = open(annotation_filepath,"rb")
@@ -152,4 +152,4 @@ class ImageNet(object):
             label = self.loadXML(annotationpath)
             label_ind = self.ctg_ind(label,meta)
             t.append(label_ind)
-        return t
+        return np.array(t)

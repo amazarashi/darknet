@@ -52,7 +52,7 @@ class Trainer(object):
     def check_gpu(self, gpu):
         if gpu >= 0:
             cuda.get_device(gpu).use()
-            #self.model.to_gpu()
+            self.model.to_gpu()
             return True
         return False
 
@@ -87,75 +87,30 @@ class Trainer(object):
         train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
-        for ii,indices in zip(progress,train_data_yeilder):
+        for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
 
-            #for ii in six.moves.range(0, len(indices), batch_in_batch_size):
-            # print("#########")
-            # print(ii)
-            # print("#########")
-            # print("11111")
-            # print("11111")
-            # print("11111")
-            # x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
-            # t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
-            x = train_x
-            t = train_y
-            # print("222222")
-            # print("222222")
-            # print("222222")
-            DaX = [self.dataaugumentation.train(img) for img in x]
-            # print("333333")
-            # print("333333")
-            # print("333333")
+            for ii in six.moves.range(0, len(indices), batch_in_batch_size):
+                x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
+                t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
+                x = train_x
+                t = train_y
 
-            print("koko1")
-            print("koko1")
-            print("koko1")
-            print(str(sys.getsizeof(DaX)))
-            x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
-            print("koko2")
-            print("koko2")
-            print("koko2")
-            print(str(sys.getsizeof(x)))
-            t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
-            print("koko3")
-            print("koko3")
-            print("koko3")
-            print(str(sys.getsizeof(t)))
-            print(str(sys.getsizeof(model)))
-            print("#######")
-            print("#######")
-            print("#######")
-            # print("4444444")
-            # print("4444444")
-            # print("4444444")
-            y = model(x,train=True)
-            # print("555555")
-            # print("555555")
-            # print("555555")
-            loss = model.calc_loss(y,t) / batch
-            # print("555555")
-            # print("555555")
-            # print("555555")
-            loss.backward()
-            print("666666")
-            print("666666")
-            print("666666")
-            loss.to_cpu()
-            tqdm.write("777777")
-            sum_loss += loss.data * batch
-            tqdm.write("8888888")
-            del loss,x,t
-            print("before update")
-            print("--------------")
-            print("-------------")
+                DaX = [self.dataaugumentation.train(img) for img in x]
+
+                x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
+                t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
+
+                y = model(x,train=True)
+                loss = model.calc_loss(y,t) / batch
+                loss.backward()
+
+                loss.to_cpu()
+                sum_loss += loss.data * batch
+                del loss,x,t
             optimizer.update()
-            print("after update")
-            print("--------------")
-            print("-------------")
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
