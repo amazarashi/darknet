@@ -96,10 +96,15 @@ class Trainer(object):
             print("## preparing training data ##")
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
+            print("train_x:",len(train_x))
+            print("train_y:",len(train_y))
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
                 t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
+                print("x:",len(x))
+                print("t:",len(t))
+
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
 
