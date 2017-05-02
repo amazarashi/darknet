@@ -57,6 +57,7 @@ class ImageNet(object):
         valImgs = valImgs.readlines()
         valImgs = [info.split()[0] for info in valImgs]
 
+        print("loading traindata ,,,,,,,")
         trainData = {}
         for trainimg in trainImgs:
             imgpath = self.dataPath + "train/" + trainimg + ".JPEG"
@@ -64,6 +65,7 @@ class ImageNet(object):
             label = self.loadXML(annotationpath)
             trainData[trainimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
 
+        print("loading valdata ,,,,,,,")
         valData = {}
         for valimg in valImgs:
             imgpath = self.dataPath + "val/" + valimg + ".JPEG"
