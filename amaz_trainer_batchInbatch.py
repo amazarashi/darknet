@@ -59,7 +59,7 @@ class Trainer(object):
         else:
             print('loading ' + self.load_model)
             serializers.load_npz(load_model, model)
-        self.model.check_gpu(gpu)
+        self.check_gpu(gpu)
 
     def init_dataset(self):
         d = open("imagenet.pkl","rb")
