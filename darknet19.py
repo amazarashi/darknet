@@ -62,7 +62,6 @@ class Darknet19(chainer.Chain):
         h = self.dark7(h,train=train)
         h = self.dark8(h,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
-        print("hi2")
         h = self.dark9(h,train=train)
         h = self.dark10(h,train=train)
         h = self.dark11(h,train=train)
@@ -75,7 +74,6 @@ class Darknet19(chainer.Chain):
         h = self.dark17(h,train=train)
         h = self.dark18(h,train=train)
         h = self.conv19(h)
-        print("hi3")
         num,categories,y,x = h.data.shape
         #average pool over (y,x) area
         h = F.average_pooling_2d(h,(y,x))
