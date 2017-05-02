@@ -83,7 +83,7 @@ class Trainer(object):
         for i in range(0,self.train_len,32):
             target = range(i,32)
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(target,self.train_key,"train")
-            x = train_x[ii:ii + batch_in_batch_size]
+            x = train_x
             DaX = [self.dataaugumentation.train(img) for img in x]
             print("before datashaping")
             x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
