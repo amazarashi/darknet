@@ -132,10 +132,10 @@ class ImageNet(object):
             print("#####")
             print("#####")
             img = Image.open(imgpath)
+            img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             print(img.shape)
             print("#####")
             print("#####")
-            img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             img = amaz_augumentation.Augumentation().Z_score(img)
             imgdatas.append(img)
         return imgdatas
