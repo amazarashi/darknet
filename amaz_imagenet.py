@@ -135,7 +135,7 @@ class ImageNet(object):
             img = Image.open(imgpath)
             origshapetype = len(np.asarray(img).shape)
             if origshapetype == 2:
-                img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
+                img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
                 print("its gray")
                 print("#####")
                 print("#####")
