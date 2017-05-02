@@ -43,7 +43,7 @@ class ImageNet(object):
         alllist = os.listdir(self.dataPath)
         metalist = [item for item in alllist if os.path.isdir(self.dataPath+item)]
         self.meta = metalist
-        category_num = len(dirlist)
+        category_num = len(metalist)
         self.category_num = category_num
 
         #get annotation info
