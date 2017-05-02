@@ -35,8 +35,8 @@ class Trainer(object):
         self.logger = amaz_log.Log()
         self.dataaugumentation = dataaugumentation
         self.batchinbatch = batchinbatch
-        self.init_model()
         self.loadmodel = loadmodel
+        self.init_model()
 
     def check_cupy(self,gpu):
         if gpu == -1:
