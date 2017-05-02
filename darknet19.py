@@ -50,9 +50,6 @@ class Darknet19(chainer.Chain):
 
     def __call__(self,x,train=True):
         #x = chainer.Variable(x)
-        print("hi1")
-        print("hi1")
-        print(sys.getsizeof(self))
         h = self.dark1(x,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
         h = self.dark2(h,train=train)
@@ -62,11 +59,6 @@ class Darknet19(chainer.Chain):
         h = self.dark5(h,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
         h = self.dark6(h,train=train)
-        self.to_cpu()
-        print(sys.getsizeof(self))
-        print("######")
-        print("######")
-        self.to_gpu()
         h = self.dark7(h,train=train)
         h = self.dark8(h,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
