@@ -22,6 +22,7 @@ class ImageNet(object):
         self.final_dataset_file = "imagenet.pkl"
         self.utility = amaz_Util.Utility()
         self.category_num = 0
+        self.meta = []
 
     def loader(self):
 
