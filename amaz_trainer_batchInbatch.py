@@ -91,6 +91,7 @@ class Trainer(object):
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 print("#########")
+                print(ii)
                 print("#########")
                 print("11111")
                 print("11111")
@@ -118,9 +119,19 @@ class Trainer(object):
                 print("555555")
                 print("555555")
                 loss = model.calc_loss(y,t) / batch_in_batch_size
+                print("555555")
+                print("555555")
+                print("555555")
                 loss.backward()
+                print("666666")
+                print("666666")
+                print("666666")
                 loss.to_cpu()
+                tqdm.write("777777")
+
                 sum_loss += loss.data * batch_in_batch_size
+                tqdm.write("8888888")
+
                 del loss,x,t,y
             print("before update")
             print("--------------")
