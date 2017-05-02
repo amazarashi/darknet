@@ -63,6 +63,8 @@ class ImageNet(object):
         valImgs = open(valImageSetPath,"r")
         valImgs = valImgs.readlines()
         valImgs = [info.split()[0] for info in valImgs]
+        print("trainLength:",len(trainImgs))
+        print("valLength:",len(valImgs))
 
         # print("loading traindata ,,,,,,,")
         # trainData = {}
