@@ -91,6 +91,8 @@ class ImageNet(object):
         # print("#####")
         # print("#####")
         meta = np.array(self.meta)
+        print(meta)
+        print(ctgname)
         print(np.where(meta==ctgname))
         ind = np.where(meta==ctgname)[0][0]
         return ind
@@ -98,7 +100,6 @@ class ImageNet(object):
     def loadXML(self,filepath):
         d = open(filepath).read()
         soup = Soup(d,"lxml")
-        print(soup.find("folder"))
         label = soup.find("folder").text
         return label
 
