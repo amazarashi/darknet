@@ -91,6 +91,7 @@ class ImageNet(object):
         # print("#####")
         # print("#####")
         meta = np.array(self.meta)
+        print(np.where(meta==ctgname))
         ind = np.where(meta==ctgname)[0][0]
         return ind
 
