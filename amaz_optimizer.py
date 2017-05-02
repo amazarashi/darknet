@@ -36,7 +36,7 @@ class OptimizerDarknet(Optimizers):
         # new_lr = self.lr * (1 - self.batch/self.data_length) ** self.decay_power
         # if current_epoch in self.schedule:
         #     new_lr = new_lr - 0.005
-        self.lr = self.lr - 
+        # self.lr = self.lr - 
         self.optimizer.lr = self.lr
         print("optimizer was changed to {0}..".format(new_lr))
 
