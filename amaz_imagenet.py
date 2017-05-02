@@ -124,7 +124,7 @@ class ImageNet(object):
             batchsize = len(dataKeyList)
             targetKeys = dataKeyList
 
-        imgdatas = np.array([])
+        imgdatas = np.array()
         for key in targetKeys:
             imgpath = self.dataPath + train_or_test+ "/" + key + ".JPEG"
             img = Image.open(imgpath)
