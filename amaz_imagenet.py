@@ -12,6 +12,9 @@ from PIL import Image
 from bs4 import BeautifulSoup as Soup
 import cv2
 
+from multiprocessing import Pool
+
+
 class ImageNet(object):
 
     def __init__(self):
@@ -124,17 +127,19 @@ class ImageNet(object):
             batchsize = len(dataKeyList)
             targetKeys = dataKeyList
 
-        imgdatas = []
-        for key in targetKeys:
-            imgpath = self.dataPath + train_or_test+ "/" + key + ".JPEG"
-            img = Image.open(imgpath)
-            origshapetype = len(np.asarray(img).shape)
-            if origshapetype == 2:
-                img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
-            transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
-            resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
-            imgdatas.append(np.array(resimg))
+        with Pool(8) as p:
+            imgdatas = p.map(self.loadImgs, [self.dataPath + train_or_test+ "/" + key + ".JPEG" for key in targetKeys])
+
         return imgdatas
+
+    def loadImgs(self,imgpath):
+        img = Image.open(imgpath)
+        origshapetype = len(np.asarray(img).shape)
+        if origshapetype == 2:
+            img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
+        transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
+        resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
+        return resimg
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
         d = open(annotation_filepath,"rb")
