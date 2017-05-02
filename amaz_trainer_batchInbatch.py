@@ -96,10 +96,6 @@ class Trainer(object):
             print("## preparing training data ##")
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
-            print(type(train_x))
-            print(train_x.shape)
-            print(type(train_y))
-            print(train_y.shape)
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
