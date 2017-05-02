@@ -21,6 +21,18 @@ sampling = amaz_sampling.Sampling()
 
 xp = cuda.cupy
 
+DEFAULT_ATTRIBUTES = (
+    'index',
+    'uuid',
+    'name',
+    'timestamp',
+    'memory.total',
+    'memory.free',
+    'memory.used',
+    'utilization.gpu',
+    'utilization.memory'
+)
+
 class Trainer(object):
 
     def __init__(self,model=None,batchinbatch=16,loadmodel=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
@@ -76,13 +88,13 @@ class Trainer(object):
         return (train_key,train_len,test_key,test_len,meta)
 
     def get_gpu_info(nvidia_smi_path='nvidia-smi', keys=DEFAULT_ATTRIBUTES, no_units=True):
-    nu_opt = '' if not no_units else ',nounits'
-    cmd = '%s --query-gpu=%s --format=csv,noheader%s' % (nvidia_smi_path, ','.join(keys), nu_opt)
-    output = subprocess.check_output(cmd, shell=True)
-    lines = output.split('\n')
-    lines = [ line.strip() for line in lines if line.strip() != '' ]
+        nu_opt = '' if not no_units else ',nounits'
+        cmd = '%s --query-gpu=%s --format=csv,noheader%s' % (nvidia_smi_path, ','.join(keys), nu_opt)
+        output = subprocess.check_output(cmd, shell=True)
+        lines = output.split('\n')
+        lines = [ line.strip() for line in lines if line.strip() != '' ]
 
-    return [ { k: v for k, v in zip(keys, line.split(', ')) } for line in lines ]
+        return [ { k: v for k, v in zip(keys, line.split(', ')) } for line in lines ]
 
     def train_one(self,epoch):
         model = self.model
@@ -134,6 +146,10 @@ class Trainer(object):
             tqdm.write("koko3")
             tqdm.write("koko3")
             tqdm.write(sys.getsizeof(t))
+            print(get_gpu_info())
+            print("#######")
+            print("#######")
+            print("#######")
             # print("4444444")
             # print("4444444")
             # print("4444444")
