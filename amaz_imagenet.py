@@ -83,7 +83,7 @@ class ImageNet(object):
         savepath = self.final_dataset_file
         self.utility.savepickle(res,savepath)
         print("data preparation was done ...")
-        return
+        return self.category_num
 
     def ctg_ind(self,ctgname):
         # print("category: ",ctgname)

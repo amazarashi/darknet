@@ -27,6 +27,7 @@ if __name__ == '__main__':
     epoch = args.pop('epoch')
 
     dataset = amaz_imagenet.ImageNet().loader()
+    print("total category num : ",dataset.category_num)
     model = darknet19.Darknet19(category_num=dataset.category_num)
     optimizer = amaz_optimizer.OptimizerDarknet(model,lr=lr,epoch=epoch,batch=args.pop("batch"))
     dataaugumentation = amaz_augumentationCustom.Normalize224
