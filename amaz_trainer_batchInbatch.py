@@ -112,11 +112,9 @@ class Trainer(object):
                 t = train_y[ii:ii + batch_in_batch_size]
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
-                print("before datashaping")
                 x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
-                print("after datashaping")
-
+                
                 y = model(x,train=True)
                 loss = model.calc_loss(y,t) / batch
                 loss.backward()
