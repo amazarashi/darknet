@@ -7,12 +7,12 @@ class Sampling(object):
     def __init__(self):
         pass
 
-    def random_sampling(self,epoch,batch_size,data_length,currentbatch):
+    def random_sampling(self,epoch,batch_size,data_length):
         """
         yield indices result of random sampling
         """
         for i in six.moves.range(epoch):
-            yield  np.random.permutation(data_length)[currentbatch:batch_size]
+            yield  np.random.permutation(data_length)[:batch_size]
 
     def random_sampling_label_normarize(self,data_length,batch_size,category_num):
         """

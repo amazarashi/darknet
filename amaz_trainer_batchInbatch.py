@@ -100,7 +100,7 @@ class Trainer(object):
         total_data_length = self.train_len
 
         progress = self.utility.create_progressbar(int(total_data_length/batch),desc='train',stride=1)
-        train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length,)
+        train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
@@ -114,7 +114,7 @@ class Trainer(object):
                 DaX = [self.dataaugumentation.train(img) for img in x]
                 x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
-                
+
                 y = model(x,train=True)
                 loss = model.calc_loss(y,t) / batch
                 loss.backward()
