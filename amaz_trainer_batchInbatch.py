@@ -7,7 +7,7 @@ from chainer import optimizers
 import time
 import six
 import pickle
-
+from tqdm import tqdm
 import amaz_sampling
 import amaz_util
 import amaz_sampling
