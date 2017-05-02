@@ -18,7 +18,7 @@ sampling = amaz_sampling.Sampling()
 
 class Trainer(object):
 
-    def __init__(self,model=None,loadmodel=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
+    def __init__(self,model=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
         self.model = model
         self.optimizer = optimizer
         self.dataset = dataset
@@ -43,18 +43,10 @@ class Trainer(object):
 
     def check_gpu(self, gpu):
         if gpu >= 0:
-            cuda.get_device(gpu).use()
-            self.to_gpu()
+            #cuda.get_device(gpu).use()
+            #self.to_gpu()
             return True
         return False
-
-    def init_model(self):
-        if load_model is None:
-            print('no model to load')
-        else:
-            print('loading ' + self.load_model)
-            serializers.load_npz(load_model, model)
-        self.model.check_gpu(gpu)
 
     def init_dataset(self):
         d = open("imagenet.pkl","rb")

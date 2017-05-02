@@ -29,11 +29,12 @@ if __name__ == '__main__':
     dataset = amaz_imagenet.ImageNet().loader()
     print("total category num : ",dataset.category_num)
     model = darknet19.Darknet19(category_num=dataset.category_num)
-    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=0.1,epoch=160,batch=args.pop("batch"))
-    dataaugumentation = amaz_augumentationCustom.Normalize224
+    optimizer = amaz_optimizer.OptimizerDarknet448(model,lr=0.001,epoch=10,batch=args.pop("batch"))
+    dataaugumentation = amaz_augumentationCustom.Normalize448
     args['model'] = model
     args['optimizer'] = optimizer
     args['dataset'] = dataset
     args['dataaugumentation'] = dataaugumentation
+    args['loadmodel'] = "model path"
     main = amaz_trainer_batchInbatch.Trainer(**args)
     main.run()

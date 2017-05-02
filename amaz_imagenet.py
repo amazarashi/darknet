@@ -23,7 +23,12 @@ class ImageNet(object):
 
     def loader(self):
 
-        self.arrangement()
+        allfiles_in_current = [path for path in glob.glob("*")]
+
+        if self.final_dataset_file in allfiles_in_current:
+            print(self.dlfile + " is already existing..")
+        else:
+            self.arrangement()
 
         return
 
@@ -65,6 +70,9 @@ class ImageNet(object):
             imgpath = self.dataPath + "train/" + trainimg + ".JPEG"
             annotationpath = self.annotationsPath + "train/" + trainimg + ".xml"
             label = self.loadXML(annotationpath)
+            print(count_trian)
+            print("imgpath:",imgpath)
+            print("label:",label)
             trainData[trainimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
             count_trian += 1
         print("train length:",count_trian)
