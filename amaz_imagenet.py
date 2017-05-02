@@ -131,21 +131,11 @@ class ImageNet(object):
         imgdatas = []
         for key in targetKeys:
             imgpath = self.dataPath + train_or_test+ "/" + key + ".JPEG"
-            print(imgpath)
-            print("#####")
-            print("#####")
             img = Image.open(imgpath)
             origshapetype = len(np.asarray(img).shape)
             if origshapetype == 2:
                 img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
-                print("its gray")
-                print("#####")
-                print("#####")
-                print(img.shape)
             transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
-            print(transfromedImg.shape)
-            print("#####")
-            print("#####")
             resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
             imgdatas.append(resimg)
         return imgdatas
@@ -164,6 +154,10 @@ class ImageNet(object):
         for key in targetKeys:
             annotationpath = self.annotationsPath + train_or_test + "/" + key + ".xml"
             label = self.loadXML(annotationpath)
+            print(label)
+            print("#####")
+            print("#####")
+            print("#####")
             label_ind = self.ctg_ind(label)
             t.append(label_ind)
         return t
