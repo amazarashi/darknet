@@ -20,7 +20,7 @@ sampling = amaz_sampling.Sampling()
 
 class Trainer(object):
 
-    def __init__(self,model=None,loadmodel=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
+    def __init__(self,model=None,batchinbatch=16,loadmodel=None,optimizer=None,dataset=None,epoch=300,batch=128,gpu=-1,dataaugumentation=amaz_augumentationCustom.Normalize32):
         self.model = model
         self.optimizer = optimizer
         self.dataset = dataset
@@ -34,6 +34,7 @@ class Trainer(object):
         self.datashaping = amaz_datashaping.DataShaping(self.xp)
         self.logger = amaz_log.Log()
         self.dataaugumentation = dataaugumentation
+        self.batchinbatch = batchinbatch
 
     def check_cupy(self,gpu):
         if gpu == -1:
@@ -80,7 +81,7 @@ class Trainer(object):
         progress = self.utility.create_progressbar(int(total_data_length/batch),desc='train',stride=1)
         train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
         #epoch,batch_size,data_length
-        batch_in_batch_size = 16
+        batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
@@ -119,7 +120,7 @@ class Trainer(object):
 
         sum_loss = 0
         sum_accuracy = 0
-        batch_in_batch_size = 16
+        batch_in_batch_size = self.batchinbatch
 
         test_x = amaz_imagenet.ImageNet().loadImageDataFromKey(np.arange(self.test_len),self.test_key,"val")
         test_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(np.arange(self.test_len),self.test_key,self.meta,"imagenet.pkl","val")
