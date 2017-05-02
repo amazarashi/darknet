@@ -137,12 +137,12 @@ class ImageNet(object):
             print("#####")
             print("#####")
             print("#####")
-            img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
-            print(img.shape)
+            transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
+            print(transfromedImg.shape)
             print("#####")
             print("#####")
-            img = amaz_augumentation.Augumentation().Z_score(img)
-            imgdatas.append(img)
+            resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
+            imgdatas.append(resimg)
         return imgdatas
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,annotation_filepath,train_or_test):
