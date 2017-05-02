@@ -16,6 +16,7 @@ import amaz_log
 import amaz_augumentationCustom
 import amaz_imagenet
 import sys
+import subprocess
 
 sampling = amaz_sampling.Sampling()
 
