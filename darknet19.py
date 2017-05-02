@@ -4,6 +4,7 @@ import chainer.links as L
 import skimage.io as io
 import numpy as np
 from chainer import utils
+from tqdm import tqdm
 
 class darkModule(chainer.Chain):
 
@@ -48,6 +49,7 @@ class Darknet19(chainer.Chain):
 
     def __call__(self,x,train=True):
         #x = chainer.Variable(x)
+        tqdm.write("hi1")
         h = self.dark1(x,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
         h = self.dark2(h,train=train)
@@ -60,6 +62,7 @@ class Darknet19(chainer.Chain):
         h = self.dark7(h,train=train)
         h = self.dark8(h,train=train)
         h = F.max_pooling_2d(h,ksize=2,stride=2,pad=0)
+        tqdm.write("hi2")
         h = self.dark9(h,train=train)
         h = self.dark10(h,train=train)
         h = self.dark11(h,train=train)
@@ -72,6 +75,7 @@ class Darknet19(chainer.Chain):
         h = self.dark17(h,train=train)
         h = self.dark18(h,train=train)
         h = self.conv19(h)
+        tqdm.write("hi3")
         num,categories,y,x = h.data.shape
         #average pool over (y,x) area
         h = F.average_pooling_2d(h,(y,x))

@@ -92,8 +92,6 @@ class Trainer(object):
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
 
             #for ii in six.moves.range(0, len(indices), batch_in_batch_size):
-            model.cleargrads()
-
             print("#########")
             print(ii)
             print("#########")
@@ -111,8 +109,8 @@ class Trainer(object):
             print("333333")
             print("333333")
             print("333333")
-            x = self.datashaping.prepareinput(DaX,dtype=xp.float32,volatile=False)
-            t = self.datashaping.prepareinput(t,dtype=xp.int32,volatile=False)
+            x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
+            t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
             del DaX
             print("4444444")
             print("4444444")
