@@ -98,7 +98,8 @@ class ImageNet(object):
     def loadXML(self,filepath):
         d = open(filepath).read()
         soup = Soup(d,"lxml")
-        label = soup.find("name").text
+        print(soup.find("folder"))
+        label = soup.find("folder").text
         return label
 
     def loadImageDataFromKey(self,sampled_key_lists,dataKeyList,train_or_test):
