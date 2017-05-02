@@ -36,6 +36,7 @@ class Trainer(object):
         self.dataaugumentation = dataaugumentation
         self.batchinbatch = batchinbatch
         self.init_model()
+        self.loadmodel = loadmodel
 
     def check_cupy(self,gpu):
         if gpu == -1:
@@ -53,7 +54,7 @@ class Trainer(object):
         return False
 
     def init_model(self):
-        if load_model is None:
+        if self.loadmodel is None:
             print('no model to load')
         else:
             print('loading ' + self.load_model)
