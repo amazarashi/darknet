@@ -133,6 +133,10 @@ class ImageNet(object):
             print("#####")
             img = Image.open(imgpath)
             print(np.asarray(Image.open(imgpath)).shape)
+            print("#####")
+            print("#####")
+            print("#####")
+            print("#####")
             img = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             print(img.shape)
             print("#####")
