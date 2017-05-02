@@ -64,6 +64,8 @@ class Darknet19(chainer.Chain):
         h = self.dark6(h,train=train)
         self.to_cpu()
         print(sys.getsizeof(self))
+        print("######")
+        print("######")
         self.to_gpu()
         h = self.dark7(h,train=train)
         h = self.dark8(h,train=train)
