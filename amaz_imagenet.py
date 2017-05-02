@@ -124,7 +124,7 @@ class ImageNet(object):
             batchsize = len(dataKeyList)
             targetKeys = dataKeyList
 
-        imgdatas = np.array()
+        imgdatas = []
         for key in targetKeys:
             imgpath = self.dataPath + train_or_test+ "/" + key + ".JPEG"
             img = Image.open(imgpath)
@@ -134,7 +134,7 @@ class ImageNet(object):
             transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
             resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
             imgdatas.append(np.array(resimg))
-        return imgdatas
+        return np.array(imgdatas)
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
         d = open(annotation_filepath,"rb")
