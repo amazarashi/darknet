@@ -73,6 +73,10 @@ class Trainer(object):
         train_key = np.array(sorted(dd["train_key"]))
         test_key = np.array(sorted(dd["val_key"]))
         meta = np.array(dd["meta"])
+        print("### data initializing ###")
+        print("category count:",len(meta))
+        print("trainLength:",train_len)
+        print("testLength:",test_len)
         return (train_key,train_len,test_key,test_len,meta)
 
     def train_one(self,epoch):
@@ -89,14 +93,17 @@ class Trainer(object):
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
+            print("## preparing training data ##")
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
+            print(type(train_x))
+            print(train_x.shape)
+            print(type(train_y))
+            print(train_y.shape)
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
                 t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
-                x = train_x
-                t = train_y
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
 
