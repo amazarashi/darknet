@@ -74,7 +74,7 @@ class Trainer(object):
         batch = self.batch
         meta = self.meta
         sum_loss = 0
-        total_data_length = len(self.train_len)
+        total_data_length = self.train_len
 
         progress = self.utility.create_progressbar(int(total_data_length/batch),desc='train',stride=1)
         train_data_yeilder = sampling.random_sampling(int(total_data_length/batch),batch,total_data_length)
