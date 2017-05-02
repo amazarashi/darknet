@@ -92,7 +92,7 @@ class Trainer(object):
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
-            model.cleargrads()
+            #model.cleargrads()
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
@@ -100,17 +100,19 @@ class Trainer(object):
                 t = train_y[ii:ii + batch_in_batch_size]
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
-
+                print("before datashaping")
                 x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
-                y = model(x,train=True)
-                loss = model.calc_loss(y,t) / batch
-                loss.backward()
+                print("after datashaping")
 
-                loss.to_cpu()
-                sum_loss += loss.data * batch
-                del loss,x,t
-            optimizer.update()
+                # y = model(x,train=True)
+                # loss = model.calc_loss(y,t) / batch
+                # loss.backward()
+                #
+                # loss.to_cpu()
+                # sum_loss += loss.data * batch
+                # del loss,x,t
+            #optimizer.update()
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
@@ -135,10 +137,8 @@ class Trainer(object):
             x = test_x[i:i + batch_in_batch_size]
             t = test_y[i:i + batch_in_batch_size]
 
-            DaX = []
-            for img in x:
-                da_x = self.dataaugumentation.test(img)
-                DaX.append(da_x)
+
+            DaX = [self.dataaugumentation.train(img) for img in x]
 
             x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=True)
             t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=True)

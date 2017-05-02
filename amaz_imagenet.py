@@ -139,6 +139,7 @@ class ImageNet(object):
             img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
         transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
         resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
+        print(resimg.shape)
         return resimg
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
