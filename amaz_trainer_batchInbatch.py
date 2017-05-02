@@ -83,8 +83,8 @@ class Trainer(object):
         batch_in_batch_size = 16
         for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
-            train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
-            train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
+            train_x = np.array(amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train"))
+            train_y = np.array(amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train"))
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[indices[ii:ii + batch_in_batch_size]]
