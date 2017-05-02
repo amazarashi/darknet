@@ -60,19 +60,25 @@ class ImageNet(object):
 
         print("loading traindata ,,,,,,,")
         trainData = {}
+        count_trian = 0
         for trainimg in trainImgs:
             imgpath = self.dataPath + "train/" + trainimg + ".JPEG"
             annotationpath = self.annotationsPath + "train/" + trainimg + ".xml"
             label = self.loadXML(annotationpath)
             trainData[trainimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
+            count_trian += 1
+        print("train length:",count_trian)
 
         print("loading valdata ,,,,,,,")
         valData = {}
+        count_val = 0
         for valimg in valImgs:
             imgpath = self.dataPath + "val/" + valimg + ".JPEG"
             annotationpath = self.annotationsPath + "val/" + valimg + ".xml"
             label = self.loadXML(annotationpath)
             trainData[valimg] = {"imgpath":imgpath,"label":label,"label_index":self.ctg_ind(label)}
+            count_val += 1
+        print("train length:",count_trian)
 
         res = {}
         res["train"] = trainData
