@@ -122,7 +122,13 @@ class Trainer(object):
                 loss.to_cpu()
                 sum_loss += loss.data * batch_in_batch_size
                 del loss,x,t,y
+            print("before update")
+            print("--------------")
+            print("-------------")
             optimizer.update()
+            print("after update")
+            print("--------------")
+            print("-------------")
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
