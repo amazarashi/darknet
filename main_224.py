@@ -28,8 +28,7 @@ if __name__ == '__main__':
 
     imagenet = amaz_imagenet.ImageNet()
     dataset = imagenet.loader()
-    print("total category num : ",imagenet.category_num)
-    model = darknet19.Darknet19(category_num=dataset.category_num)
+    model = darknet19.Darknet19(category_num=1000)
     optimizer = amaz_optimizer.OptimizerDarknet(model,lr=0.1,epoch=160,batch=args.pop("batch"))
     dataaugumentation = amaz_augumentationCustom.Normalize224
     args['model'] = model
