@@ -120,12 +120,12 @@ class Trainer(object):
             print("koko2")
             print("koko2")
             print(str(sys.getsizeof(x)))
-
             t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
             print("koko3")
             print("koko3")
             print("koko3")
             print(str(sys.getsizeof(t)))
+            print(str(sys.getsizeof(model)))
             print("#######")
             print("#######")
             print("#######")
