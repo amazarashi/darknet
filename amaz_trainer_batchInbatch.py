@@ -117,14 +117,14 @@ class Trainer(object):
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
                 print("after datashaping")
 
-                # y = model(x,train=True)
-                # loss = model.calc_loss(y,t) / batch
-                # loss.backward()
-                #
-                # loss.to_cpu()
-                # sum_loss += loss.data * batch
-                # del loss,x,t
-            #optimizer.update()
+                y = model(x,train=True)
+                loss = model.calc_loss(y,t) / batch
+                loss.backward()
+
+                loss.to_cpu()
+                sum_loss += loss.data * batch
+                del loss,x,t
+            optimizer.update()
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
