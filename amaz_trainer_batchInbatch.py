@@ -88,18 +88,30 @@ class Trainer(object):
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
+                print("11111")
+                print("11111")
+                print("11111")
                 x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
                 t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
-
+                print("222222")
+                print("222222")
+                print("222222")
                 DaX = []
                 for img in x:
                     da_x = self.dataaugumentation.train(img)
                     DaX.append(da_x)
-
+                print("333333")
+                print("333333")
+                print("333333")
                 x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
-
+                print("4444444")
+                print("4444444")
+                print("4444444")
                 y = model(x,train=True)
+                print("555555")
+                print("555555")
+                print("555555")
                 loss = model.calc_loss(y,t) / batch_in_batch_size
                 loss.backward()
                 loss.to_cpu()
