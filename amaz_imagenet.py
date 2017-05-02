@@ -105,16 +105,8 @@ class ImageNet(object):
         print("data preparation was done ...")
         return self.category_num
 
-    def ctg_ind(self,ctgname):
-        print("category: ",ctgname)
-        # print("#####")
-        # print("#####")
-        meta = np.array(self.meta)
-        print(meta)
-        print("#####")
-        print("#####")
-        print("#####")
-        print(np.where(meta==ctgname))
+    def ctg_ind(self,ctgname,meta):
+        meta = np.array(meta)
         ind = np.where(meta==ctgname)[0][0]
         return ind
 
@@ -144,7 +136,7 @@ class ImageNet(object):
             imgdatas.append(resimg)
         return imgdatas
 
-    def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,annotation_filepath,train_or_test):
+    def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
         d = open(annotation_filepath,"rb")
         dd = pickle.load(d)
         d.close()
@@ -158,10 +150,6 @@ class ImageNet(object):
         for key in targetKeys:
             annotationpath = self.annotationsPath + train_or_test + "/" + key + ".xml"
             label = self.loadXML(annotationpath)
-            print(label)
-            print("#####")
-            print("#####")
-            print("#####")
-            label_ind = self.ctg_ind(label)
+            label_ind = self.ctg_ind(label,meta)
             t.append(label_ind)
         return t
