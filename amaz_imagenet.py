@@ -18,7 +18,7 @@ from multiprocessing import Pool
 class ImageNet(object):
 
     def __init__(self):
-        self.trainImageBasePath = "/media/codenext2/d/ILSVRC/"
+        self.trainImageBasePath = "/home/codenext2/Downloads/ILSVRC/"
         self.annotationsPath = self.trainImageBasePath + "Annotations/CLS-LOC/"
         self.dataPath = self.trainImageBasePath + "Data/CLS-LOC/"
         self.imgSetsPath = self.trainImageBasePath + "ImageSets/CLS-LOC/"
