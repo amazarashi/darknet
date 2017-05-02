@@ -27,7 +27,7 @@ class ImageNet(object):
         allfiles_in_current = [path for path in glob.glob("*")]
 
         if self.final_dataset_file in allfiles_in_current:
-            print(self.dlfile + " is already existing..")
+            print(self.final_dataset_file + " is already existing..")
         else:
             self.arrangement()
 
