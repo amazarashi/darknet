@@ -121,7 +121,7 @@ class Trainer(object):
                 loss.backward()
                 loss.to_cpu()
                 sum_loss += loss.data * batch_in_batch_size
-                del loss,x,t
+                del loss,x,t,y
             optimizer.update()
 
         ## LOGGING ME
