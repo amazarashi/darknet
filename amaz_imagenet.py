@@ -106,7 +106,7 @@ class ImageNet(object):
         return self.category_num
 
     def ctg_ind(self,ctgname):
-        # print("category: ",ctgname)
+        print("category: ",ctgname)
         # print("#####")
         # print("#####")
         meta = np.array(self.meta)
