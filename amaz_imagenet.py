@@ -138,7 +138,7 @@ class ImageNet(object):
         if origshapetype == 2:
             img = cv2.cvtColor(np.array(img),cv2.COLOR_GRAY2RGB)
         transfromedImg = np.asarray(img).transpose(2,0,1).astype(np.float32)/255.
-        resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)
+        resimg = amaz_augumentation.Augumentation().Z_score(transfromedImg)[:3]
         print(imgpath)
         print(resimg.shape)
         return resimg
