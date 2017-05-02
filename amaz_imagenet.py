@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup as Soup
 class ImageNet(object):
 
     def __init__(self):
-        self.trainImageBasePath = "/home/codenext/Downloads/ILSVRC/"
+        self.trainImageBasePath = "/media/codenext2/d/ILSVRC/"
         self.annotationsPath = self.trainImageBasePath + "Annotations/CLS-LOC/"
         self.dataPath = self.trainImageBasePath + "Data/CLS-LOC/"
         self.imgSetsPath = self.trainImageBasePath + "ImageSets/CLS-LOC/"
