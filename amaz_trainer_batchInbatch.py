@@ -81,6 +81,7 @@ class Trainer(object):
 
     def imagenet_Inspection(self):
         for i in range(0,self.train_len,32):
+            print("total:",self.train_len,"-> ",i,"~",i+32)
             target = range(i,i+32)
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(target,self.train_key,"train")
             x = train_x
