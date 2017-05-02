@@ -93,10 +93,8 @@ class Trainer(object):
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
             model.cleargrads()
-            print("prepare data")
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
-            print("prepare data end")
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
                 x = train_x[ii:ii + batch_in_batch_size]
                 t = train_y[ii:ii + batch_in_batch_size]
@@ -105,13 +103,10 @@ class Trainer(object):
 
                 x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
-                print("forward")
                 y = model(x,train=True)
                 loss = model.calc_loss(y,t) / batch
-                print("backward")
                 loss.backward()
-                print("backward end")
-
+                
                 loss.to_cpu()
                 sum_loss += loss.data * batch
                 del loss,x,t
