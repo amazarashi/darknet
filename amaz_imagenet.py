@@ -19,6 +19,7 @@ class ImageNet(object):
         self.dataPath = self.trainImageBasePath + "Data/CLS-LOC/"
         self.imgSetsPath = self.trainImageBasePath + "ImageSets/CLS-LOC/"
         self.final_dataset_file = "imagenet.pkl"
+        self.utility = amaz_Util.Utility()
         self.category_num = 0
 
     def loader(self):
