@@ -111,7 +111,7 @@ class Trainer(object):
             # print("333333")
             x = self.datashaping.prepareinput(DaX,dtype=self.xp.float32,volatile=False)
             t = self.datashaping.prepareinput(t,dtype=self.xp.int32,volatile=False)
-            del DaX
+            tqdm.write("koko")
             # print("4444444")
             # print("4444444")
             # print("4444444")
