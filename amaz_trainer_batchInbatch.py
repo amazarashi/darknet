@@ -100,8 +100,8 @@ class Trainer(object):
             print("train_y:",len(train_y))
 
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
-                x = train_x[ii:ii*batch_in_batch_size + batch_in_batch_size]
-                t = train_y[ii:ii*batch_in_batch_size + batch_in_batch_size]
+                x = train_x[ii:ii + batch_in_batch_size]
+                t = train_y[ii:ii + batch_in_batch_size]
                 print("x:",len(x))
                 print("t:",len(t))
 
