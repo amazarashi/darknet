@@ -70,6 +70,7 @@ class Trainer(object):
         d.close()
         #test
         dd["train_key"] = dd["train_key"][:100]
+        dd["test_key"] = dd["test_key"][:100]
         train_len = len(dd["train_key"])
         test_len = len(dd["val_key"])
         train_key = np.array(sorted(dd["train_key"]))
