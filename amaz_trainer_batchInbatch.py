@@ -69,8 +69,8 @@ class Trainer(object):
         dd = pickle.load(d)
         d.close()
         #test
-        dd["train_key"] = dd["train_key"][:100]
-        dd["val_key"] = dd["val_key"][:100]
+        dd["train_key"] = dd["train_key"][:300]
+        dd["val_key"] = dd["val_key"][:300]
         train_len = len(dd["train_key"])
         test_len = len(dd["val_key"])
         train_key = np.array(sorted(dd["train_key"]))
