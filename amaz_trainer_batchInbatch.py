@@ -160,14 +160,14 @@ class Trainer(object):
             loss = model.calc_loss(y,t)
             sum_loss += batch_in_batch_size * loss.data
             sum_accuracy += F.accuracy(y,t).data * batch_in_batch_size
-            categorical_accuracy = model.accuracy_of_each_category(y,t)
+            #categorical_accuracy = model.accuracy_of_each_category(y,t)
             del loss,x,t
 
         ## LOGGING ME
-        print("test mean loss : ",sum_loss/len(test_y))
-        self.logger.test_loss(epoch,sum_loss/len(test_y))
-        print("test mean accuracy : ", sum_accuracy/len(test_y))
-        self.logger.accuracy(epoch,sum_accuracy/len(test_y))
+        print("test mean loss : ",sum_loss/self.test_len)
+        self.logger.test_loss(epoch,sum_loss/self.test_len)
+        print("test mean accuracy : ", sum_accuracy/self.test_len)
+        self.logger.accuracy(epoch,sum_accuracy/self.test_len)
         print("######################")
 
     def run(self):
