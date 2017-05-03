@@ -146,11 +146,12 @@ class Trainer(object):
         test_x = amaz_imagenet.ImageNet().loadImageDataFromKey(np.arange(self.test_len),self.test_key,"val")
         test_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(np.arange(self.test_len),self.test_key,self.meta,"imagenet.pkl","val")
 
-        progress = self.utility.create_progressbar(int(len(test_x)),desc='test',stride=batch_in_batch_size)
+        progress = self.utility.create_progressbar(int(self.test_len),desc='test',stride=batch)
         for i in progress:
             x = test_x[i:i + batch_in_batch_size]
             t = test_y[i:i + batch_in_batch_size]
-
+            print(len(x))
+            print(len(t))
 
             DaX = [self.dataaugumentation.train(img) for img in x]
 
@@ -159,13 +160,14 @@ class Trainer(object):
 
             y = model(x,train=False)
             loss = model.calc_loss(y,t)
-            sum_loss += batch_in_batch_size * loss.data
-            sum_accuracy += F.accuracy(y,t).data * batch_in_batch_size
+            sum_loss += batch * loss.data
+            sum_accuracy += F.accuracy(y,t).data * batch
             #categorical_accuracy = model.accuracy_of_each_category(y,t)
             del loss,x,t
 
         ## LOGGING ME
         print(sum_loss)
+        print(sum_accuracy)
         print("test mean loss : ",sum_loss/self.test_len)
         self.logger.test_loss(epoch,sum_loss/self.test_len)
         print("test mean accuracy : ", sum_accuracy/self.test_len)
