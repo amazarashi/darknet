@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='cifar10')
     parser.add_argument('--epoch', '-e', type=int,
-                        default=300,
+                        default=60,
                         help='maximum epoch')
     parser.add_argument('--batch', '-b', type=int,
                         default=64,
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     imagenet = amaz_imagenet.ImageNet()
     dataset = imagenet.loader()
     model = darknet19.Darknet19(category_num=1000)
-    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=0.1,epoch=160,batch=args.pop("batch"))
+    optimizer = amaz_optimizer.OptimizerDarknet(model,lr=0.04,epoch=60,batch=args.pop("batch"))
     dataaugumentation = amaz_augumentationCustom.Normalize224
     args['model'] = model
     args['optimizer'] = optimizer
