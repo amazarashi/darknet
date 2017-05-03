@@ -128,7 +128,7 @@ class Trainer(object):
 
         ## LOGGING ME
         print("train mean loss : ",float(sum_loss) / total_data_length)
-        self.logger.train_loss(epoch,sum_loss/len(train_y))
+        self.logger.train_loss(epoch,sum_loss/total_data_length)
         print("######################")
 
     def test_one(self,epoch):
