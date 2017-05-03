@@ -118,11 +118,10 @@ class Trainer(object):
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
 
                 y = model(x,train=True)
-                loss = model.calc_loss(y,t) / batch
+                loss = model.calc_loss(y,t) / batch_in_batch_size
                 loss.backward()
-
                 loss.to_cpu()
-                sum_loss += loss.data * batch
+                sum_loss += loss.data * batch_in_batch_size
                 del loss,x,t
             optimizer.update()
 
