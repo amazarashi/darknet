@@ -68,7 +68,7 @@ class Trainer(object):
         d = open("imagenet.pkl","rb")
         dd = pickle.load(d)
         d.close()
-        train_key = dd["train_key"]
+        train_key = dd["train_key"][:5000]
         val_key =  dd["val_key"]
         train_len = len(train_key)
         test_len = len(val_key)
@@ -144,13 +144,13 @@ class Trainer(object):
         sum_accuracy = 0
         batch_in_batch_size = self.batchinbatch
 
-        test_x = amaz_imagenet.ImageNet().loadImageDataFromKey(np.arange(self.test_len),self.test_key,"val")
-        test_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(np.arange(self.test_len),self.test_key,self.meta,"imagenet.pkl","val")
-
         progress = self.utility.create_progressbar(int(self.test_len),desc='test',stride=batch)
         for i in progress:
-            x = test_x[i:i + batch_in_batch_size]
-            t = test_y[i:i + batch_in_batch_size]
+            test_x = amaz_imagenet.ImageNet().loadImageDataFromKey(np.arange(i,i + batch_in_batch_size),self.test_key,"val")
+            test_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(np.arange(i,i + batch_in_batch_size),self.test_key,self.meta,"imagenet.pkl","val")
+
+            x = test_x
+            t = test_y
             d_length = len(x)
 
             DaX = [self.dataaugumentation.train(img) for img in x]
