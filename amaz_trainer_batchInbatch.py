@@ -146,22 +146,18 @@ class Trainer(object):
 
         progress = self.utility.create_progressbar(int(self.test_len),desc='test',stride=batch)
         for i in progress:
-            print("before data load")
             test_x = amaz_imagenet.ImageNet().loadImageDataFromKey(np.arange(i,i + batch_in_batch_size),self.test_key,"val")
             test_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(np.arange(i,i + batch_in_batch_size),self.test_key,self.meta,"imagenet.pkl","val")
-            print("after data load")
+
             x = test_x
             t = test_y
             d_length = len(x)
-            print("before augumetation")
+
             DaX = [self.dataaugumentation.train(img) for img in x]
-            print("after augumetation")
             x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=True)
             t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=True)
-            print("after prepaer input")
 
             y = model(x,train=False)
-            print("after predict")
             loss = model.calc_loss(y,t)
             sum_loss += d_length * loss.data
             sum_accuracy += F.accuracy(y,t).data * d_length
