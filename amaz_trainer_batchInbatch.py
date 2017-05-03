@@ -110,6 +110,7 @@ class Trainer(object):
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
+                print(ii)
                 x = train_x[ii:ii + batch_in_batch_size]
                 t = train_y[ii:ii + batch_in_batch_size]
 
