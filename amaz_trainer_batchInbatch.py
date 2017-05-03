@@ -68,7 +68,7 @@ class Trainer(object):
         d = open("imagenet.pkl","rb")
         dd = pickle.load(d)
         d.close()
-        train_key = dd["train_key"][:1000]
+        train_key = dd["train_key"][:5000]
         val_key =  dd["val_key"][:1000]
         train_len = len(train_key)
         test_len = len(val_key)
@@ -113,18 +113,19 @@ class Trainer(object):
                 # print(ii)
                 x = train_x[ii:ii + batch_in_batch_size]
                 t = train_y[ii:ii + batch_in_batch_size]
+                d_length = len(x)
 
                 DaX = [self.dataaugumentation.train(img) for img in x]
                 x = self.datashaping.prepareinput(DaX,dtype=np.float32,volatile=False)
                 t = self.datashaping.prepareinput(t,dtype=np.int32,volatile=False)
 
                 y = model(x,train=True)
-                loss = model.calc_loss(y,t) / batch_in_batch_size
+                loss = model.calc_loss(y,t) / d_length
                 loss.backward()
                 loss.to_cpu()
                 # print("loss",loss.data)
                 # print("batch_in_batch_size",batch_in_batch_size)
-                sum_loss += loss.data * batch_in_batch_size
+                sum_loss += loss.data * d_length
                 del loss,x,t
             optimizer.update()
 
@@ -150,8 +151,7 @@ class Trainer(object):
         for i in progress:
             x = test_x[i:i + batch_in_batch_size]
             t = test_y[i:i + batch_in_batch_size]
-            print(len(x))
-            print(len(t))
+            d_length = len(x)
 
             DaX = [self.dataaugumentation.train(img) for img in x]
 
@@ -160,14 +160,12 @@ class Trainer(object):
 
             y = model(x,train=False)
             loss = model.calc_loss(y,t)
-            sum_loss += batch * loss.data
-            sum_accuracy += F.accuracy(y,t).data * batch
+            sum_loss += d_length * loss.data
+            sum_accuracy += F.accuracy(y,t).data * d_length
             #categorical_accuracy = model.accuracy_of_each_category(y,t)
             del loss,x,t
 
         ## LOGGING ME
-        print(sum_loss)
-        print(sum_accuracy)
         print("test mean loss : ",sum_loss/self.test_len)
         self.logger.test_loss(epoch,sum_loss/self.test_len)
         print("test mean accuracy : ", sum_accuracy/self.test_len)
