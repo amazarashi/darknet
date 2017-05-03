@@ -106,7 +106,7 @@ class Trainer(object):
         #epoch,batch_size,data_length
         batch_in_batch_size = self.batchinbatch
         for i,indices in zip(progress,train_data_yeilder):
-            #model.cleargrads()
+            model.cleargrads()
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
