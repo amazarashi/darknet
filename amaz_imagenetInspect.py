@@ -11,6 +11,7 @@ from os import system
 from PIL import Image
 from bs4 import BeautifulSoup as Soup
 import cv2
+import os.path
 
 from multiprocessing import Pool
 
@@ -52,3 +53,38 @@ class ImageNetInspector(object):
         valImgs = [info.split()[0] for info in valImgs]
         print("trainLength:",len(trainImgs))
         print("valLength:",len(valImgs))
+
+    def imgExistsTest(self):
+        #get annotation info
+        trainImageSetPath = self.imgSetsPath + "train_cls.txt"
+        valImageSetPath = self.imgSetsPath + "val.txt"
+
+        trainImgs = open(trainImageSetPath,"r")
+        trainImgs = trainImgs.readlines()
+        trainImgs = [info.split()[0] for info in trainImgs]
+        print("train_cls Record Nubmer: ",len(trainImgs))
+        valImgs = open(valImageSetPath,"r")
+        valImgs = valImgs.readlines()
+        valImgs = [info.split()[0] for info in valImgs]
+        print("val Record Nubmer: ",len(valImgs))
+
+        # image check
+        trainImgPaths = [self.dataPath + "train/" + imgkey + ".JPEG" for imgkey in trainImgs]
+        valImgPaths = [self.dataPath + "val/" + imgkey + ".JPEG" for imgkey in valImgs]
+
+        trainCheck = [os.path.exists(path) for path in trainImgPaths]
+        trainCheck = np.array(trainCheck)
+        number_of_nonexist_train = len(np.where(trainCheck == False))
+        print("number_of_nonexist_train:",number_of_nonexist_train)
+
+        valCheck = [os.path.exists(path) for path in valImgPaths]
+        valCheck = np.array(valCheck)
+        number_of_nonexist_val = len(np.where(valCheck == False))
+        print("number_of_nonexist_val:",number_of_nonexist_val)
+
+
+if __name__ == "__main__":
+
+    # imageexists test on train
+
+    # imageexists test on test
