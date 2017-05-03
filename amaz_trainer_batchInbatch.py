@@ -68,8 +68,8 @@ class Trainer(object):
         d = open("imagenet.pkl","rb")
         dd = pickle.load(d)
         d.close()
-        train_key = dd["train_key"][:300]
-        val_key =  dd["val_key"][:300]
+        train_key = dd["train_key"][:1000]
+        val_key =  dd["val_key"][:1000]
         train_len = len(train_key)
         test_len = len(val_key)
         train_key = np.array(sorted(train_key))
