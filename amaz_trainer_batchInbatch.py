@@ -159,6 +159,8 @@ class Trainer(object):
 
             y = model(x,train=False)
             loss = model.calc_loss(y,t)
+            print(i)
+            print(loss.data)
             sum_loss += batch_in_batch_size * loss.data
             sum_accuracy += F.accuracy(y,t).data * batch_in_batch_size
             #categorical_accuracy = model.accuracy_of_each_category(y,t)
