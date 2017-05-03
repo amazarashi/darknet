@@ -77,7 +77,7 @@ class ImageNetInspector(object):
         number_of_nonexist_train = len(np.where(trainCheck == False))
         print("number_of_nonexist_train:",number_of_nonexist_train)
         print(" --- non exist path --- ")
-        nonpath = [trainImgPaths[ind] for ind in  np.where(trainCheck == False)]
+        nonpath = [trainImgPaths[ind] for ind in  np.where(trainCheck == False)[0]]
         print(nonpath)
 
         valCheck = [os.path.exists(path) for path in valImgPaths]
@@ -85,7 +85,7 @@ class ImageNetInspector(object):
         number_of_nonexist_val = len(np.where(valCheck == False))
         print("number_of_nonexist_val:",number_of_nonexist_val)
         print(" --- non exist path --- ")
-        nonpath = [valImgPaths[ind] for ind in  np.where(valCheck == False)]
+        nonpath = [valImgPaths[ind] for ind in  np.where(valCheck == False)[0]]
         print(nonpath)
 
 
