@@ -121,7 +121,8 @@ class Trainer(object):
                 loss = model.calc_loss(y,t) / batch_in_batch_size
                 loss.backward()
                 loss.to_cpu()
-                print(loss.data * batch_in_batch_size)
+                print("loss",loss.data)
+                print("batch_in_batch_size",batch_in_batch_size)
                 sum_loss += loss.data * batch_in_batch_size
                 del loss,x,t
             optimizer.update()
