@@ -59,7 +59,7 @@ class ImageNet(object):
         self.category_num = category_num
 
         #get annotation info
-        trainImageSetPath = self.imgSetsPath + "train_cls.txt"
+        trainImageSetPath = self.imgSetsPath + "train_loc.txt"
         valImageSetPath = self.imgSetsPath + "val.txt"
 
         trainImgs = open(trainImageSetPath,"r")
