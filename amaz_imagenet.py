@@ -151,7 +151,7 @@ class ImageNet(object):
         if train_or_test == "train":
             targetKeys = dataKeyList[sampled_key_lists]
         elif train_or_test == "val":
-            targetKeys = dataKeyList
+            targetKeys = dataKeyList[sampled_key_lists]
 
         t = []
         for key in targetKeys:
