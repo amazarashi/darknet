@@ -76,11 +76,19 @@ class ImageNetInspector(object):
         trainCheck = np.array(trainCheck)
         number_of_nonexist_train = len(np.where(trainCheck == False))
         print("number_of_nonexist_train:",number_of_nonexist_train)
+        print(" --- non exist path --- ")
+        for ind in np.where(trainCheck == False):
+            p = trainImgPaths[ind]
+            print(p)
 
         valCheck = [os.path.exists(path) for path in valImgPaths]
         valCheck = np.array(valCheck)
         number_of_nonexist_val = len(np.where(valCheck == False))
         print("number_of_nonexist_val:",number_of_nonexist_val)
+        print(" --- non exist path --- ")
+        for ind in np.where(valCheck == False):
+            p = valImgPaths[ind]
+            print(p)
 
 
 # if __name__ == "__main__":
