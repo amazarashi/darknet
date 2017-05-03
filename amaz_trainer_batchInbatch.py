@@ -72,8 +72,8 @@ class Trainer(object):
         val_key =  dd["val_key"][:300]
         train_len = len(train_key)
         test_len = len(val_key)
-        train_key = np.array(sorted(train_len))
-        test_key = np.array(sorted(test_len))
+        train_key = np.array(sorted(train_key))
+        test_key = np.array(sorted(val_key))
         meta = np.array(dd["meta"])
         print("### data initializing ###")
         print("category count:",len(meta))
