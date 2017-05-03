@@ -110,7 +110,7 @@ class Trainer(object):
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(indices,self.train_key,"train")
             train_y = amaz_imagenet.ImageNet().loadImageAnnotationsFromKey(indices,self.train_key,self.meta,"imagenet.pkl","train")
             for ii in six.moves.range(0, len(indices), batch_in_batch_size):
-                print(ii)
+                # print(ii)
                 x = train_x[ii:ii + batch_in_batch_size]
                 t = train_y[ii:ii + batch_in_batch_size]
 
@@ -122,8 +122,8 @@ class Trainer(object):
                 loss = model.calc_loss(y,t) / batch_in_batch_size
                 loss.backward()
                 loss.to_cpu()
-                print("loss",loss.data)
-                print("batch_in_batch_size",batch_in_batch_size)
+                # print("loss",loss.data)
+                # print("batch_in_batch_size",batch_in_batch_size)
                 sum_loss += loss.data * batch_in_batch_size
                 del loss,x,t
             optimizer.update()
