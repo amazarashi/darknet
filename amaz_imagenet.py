@@ -119,19 +119,6 @@ class ImageNet(object):
         label = soup.find("name").text
         return label
 
-    def loadImageDataFromKey(self,sampled_key_lists,dataKeyList,train_or_test):
-        if train_or_test == "train":
-            batchsize = len(sampled_key_lists)
-            targetKeys = dataKeyList[sampled_key_lists]
-        elif train_or_test == "val":
-            batchsize = len(dataKeyList)
-            targetKeys = dataKeyList
-
-        with Pool(8) as p:
-            imgdatas = p.map(self.loadImgs, [self.dataPath + train_or_test+ "/" + key + ".JPEG" for key in targetKeys])
-
-        return imgdatas
-
     def loadImgs(self,imgpath):
         img = Image.open(imgpath)
         origshapetype = len(np.asarray(img).shape)
@@ -142,6 +129,19 @@ class ImageNet(object):
         # print(imgpath)
         # print(resimg.shape)
         return resimg
+
+    def loadImageDataFromKey(self,sampled_key_lists,dataKeyList,train_or_test):
+        if train_or_test == "train":
+            batchsize = len(sampled_key_lists)
+            targetKeys = dataKeyList[sampled_key_lists]
+        elif train_or_test == "val":
+            batchsize = len(dataKeyList)
+            targetKeys = dataKeyList[sampled_key_lists]
+
+        with Pool(8) as p:
+            imgdatas = p.map(self.loadImgs, [self.dataPath + train_or_test+ "/" + key + ".JPEG" for key in targetKeys])
+
+        return imgdatas
 
     def loadImageAnnotationsFromKey(self,sampled_key_lists,dataKeyList,meta,annotation_filepath,train_or_test):
         d = open(annotation_filepath,"rb")
