@@ -82,9 +82,10 @@ class Trainer(object):
         return (train_key,train_len,test_key,test_len,meta)
 
     def imagenet_Inspection(self):
-        for i in range(0,self.train_len,64):
-            print("total:",self.train_len,"-> ",i,"~",i+32)
-            target = range(i,i+32)
+        batch = 256
+        for i in range(0,self.train_len,batch):
+            print("total:",self.train_len,"-> ",i,"~",i+batch)
+            target = range(i,i+batch)
             train_x = amaz_imagenet.ImageNet().loadImageDataFromKey(target,self.train_key,"train")
             x = train_x
             DaX = [self.dataaugumentation.train(img) for img in x]
