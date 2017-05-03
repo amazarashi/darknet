@@ -83,7 +83,7 @@ class ImageNetInspector(object):
         print("number_of_nonexist_val:",number_of_nonexist_val)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
     # imageexists test on train
 
